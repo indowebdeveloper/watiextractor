@@ -1,0 +1,44 @@
+[2020-09-30 05:51:21] Jainal Kiosban : 
+Untuk Pemesanan mohon dilengkapi data berikut ya Pak/Bu,
+Nama Lengkap : 
+Email : 
+Phone : 
+Alamat (Jl, RT, RW, No, Kel) : 
+Merk Mobil : 
+Tahun Mobil : 
+Plat Mobil : 
+Tanggal kunjungan : 
+Waktu kunjungan : 
+Tempat Pemasangan : Kuda Mas
+Ban/item yang dipesan : 
+Quantity : 
+Payment COD/Transfer : 
+
+Terima kasih telah mempercayakan kebutuhan otomotif anda kepada kami.
+
+www.kiosban.com 
+[2020-09-30 05:26:42] Jainal Kiosban : selamat siang Kak, Minat order kak? 
+[2020-09-30 05:11:40] Bot  : Halo Bapak/Ibu Yuyun Hariyanto
+
+Kami ingin melakukan follow-up terkait pertanyaan Bapak / Ibu terakhir kali.
+Apakah masih ada yang dapat kami bantu terkait pertanyaan Bapak / Ibu ?
+
+Apabila masih ada, 
+dengan senang hati kami siap membantu menjawab pertanyaan Bapak / Ibu.. 🙏😊
+
+Nah kami juga ingin memberikan informasi bahwa Bapak / Ibu Yuyun Hariyanto
+dapat melihat promo-promo menarik dari kami 
+
+dengan mengirim pesan "/promoKeren" tanpa tanda petik, 
+untuk melihat promo-promo menarik dari kami.
+
+Terimakasih 🙏😊 
+[2020-09-29 05:30:37] Jainal Kiosban : iyaa pak rekanan kami baru ada disunter. setiap hari buka pak. banyak customer kami juga dari depok dan bogor 
+[2020-09-29 05:26:33] Yuyun Hariyanto  : cuma di sunter doang... yang terdekat dari depok, gak ada kah? 
+[2020-09-29 05:25:26] Yuyun Hariyanto  : jauh sekali... 
+[2020-09-29 05:14:44] Jainal Kiosban : Rekanan kami disunter. Harga sudah free pasang, balancing, nitrogen dan pentil karet. Jika kedatangan hari ini kami ada tambahan promo Free spooring dan cek kaki". 
+[2020-09-29 05:09:07] Yuyun Hariyanto  : posisi saya di depok, apakah ada bengkel kios ban di depok? 
+[2020-09-29 05:07:40] Yuyun Hariyanto  : apakah harga sudah termasuk pasang dan balancing? 
+[2020-09-29 05:06:12] Jainal Kiosban : MULTISTRADA ACHILES 122 165/65R13 77T Rp.380.000/pcs 
+[2020-09-29 05:04:45] Jainal Kiosban : GT CHAMPIRO ECO 165/65R13 Rp.395.000/pcs 
+[2020-09-29 04:16:14] Yuyun Hariyanto  : cari ban ukuran 165-65 R13... boleh minta  pricelistnya 
