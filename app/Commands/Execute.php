@@ -15,7 +15,7 @@ class Execute extends Command
      *
      * @var string
      */
-    protected $signature = 'execute';
+    protected $signature = 'execute {date=today : "gunakan tanggal dengan format YYYY-MM-DD ( eg: 2020-07-20 )"}';
 
     /**
      * The description of the command.
@@ -33,42 +33,56 @@ class Execute extends Command
      * @return mixed
      */
 
+    public function itterateChat($chats, $contactName, $phone)
+    {
+        $text = '';
+        foreach ($chats as $chat) {
+            if (isset($chat['text']) && $chat['eventType'] == 'message') {
+                $timestamp = Carbon::createFromTimestamp($chat['timestamp'])->setTimezone('Asia/Jakarta');
+
+                if (!is_null($chat['operatorName'])) {
+                    // for operator
+                    $text .= '[' . $timestamp . '] ' . $chat['operatorName'] . ' : ' . $chat['text'];
+                } else {
+                    // for customer
+                    $text .= '[' . $timestamp . '] ' . $contactName . ' : ' . $chat['text'];
+                }
+                $text .= " \r\n";
+            }
+        }
+        // put as file
+        Storage::put('/' . $this->folderName . '/ChatWith-' . $phone . '.txt', $text);
+    }
     public function handle()
     {
-
+        $date = ($this->argument('date') == 'today' ? Carbon::now()->format('Y-m-d') : ($this->argument('date') == 'all' ? 'all' : Carbon::createFromFormat('Y-m-d', $this->argument('date'))->toDateString()));
         $this->task("Mengunduh kontak...", function () {
-            $this->contacts = Http::withToken($this->token)->get('https://live-server-143.wati.io/api/v1/getContacts')->json()['contact_list'];
+            $this->contacts = Http::withToken($this->token)->get('https://live-server-143.wati.io/api/v1/getContacts?pageSize=10000000')->json()['contact_list'];
             return !is_null($this->contacts);
         });
-        $this->task("Membuat folder backup..", function () {
-            $this->folderName = 'WatiBackup-' . Carbon::now()->format('Y-m-d');
+        $this->task("Membuat folder backup..", function () use ($date) {
+            $dateFolder = ($date == 'all' ? 'all-' . Carbon::now()->format('Y-m-d') : $date);
+            $this->folderName = 'WatiBackup-' . $dateFolder;
             Storage::makeDirectory($this->folderName);
             return true;
         });
         $this->info('====== Memulai ekstraksi =======');
         $this->question('Total contact adalah : ' . count($this->contacts));
         foreach ($this->contacts as $contact) {
-            $this->task("Melakukan backup " . $this->index . " dari " . count($this->contacts) . " Kontak", function () use ($contact) {
+            $this->task("Melakukan backup ( " . $contact['wAid'] . ") " . $this->index . " dari " . count($this->contacts) . " Kontak", function () use ($contact, $date) {
                 $contactName = $contact['fullName'];
                 $phone = $contact['wAid'];
-                $messages = Http::withToken($this->token)->get('https://live-server-143.wati.io/api/v1/getMessages/' . $contact['wAid'])->json();
-                $text = '';
-                foreach ($messages['messages']['items'] as $chat) {
-                    if (isset($chat['text']) && $chat['eventType'] == 'message') {
-                        $timestamp = Carbon::createFromTimestamp($chat['timestamp']);
-
-                        if (!is_null($chat['operatorName'])) {
-                            // for operator
-                            $text .= '[' . $timestamp . '] ' . $chat['operatorName'] . ' : ' . $chat['text'];
-                        } else {
-                            // for customer
-                            $text .= '[' . $timestamp . '] ' . $contactName . ' : ' . $chat['text'];
-                        }
-                        $text .= " \r\n";
+                $messages = Http::withToken($this->token)->get('https://live-server-143.wati.io/api/v1/getMessages/' . $contact['wAid'] . '?pageSize=1000000')->json();
+                if ($date == "all") {
+                    $this->itterateChat($messages['messages']['items'], $contactName, $phone);
+                } else {
+                    if ($date == Carbon::parse($messages['messages']['items'][0]['created'])->setTimezone('Asia/Jakarta')->toDateString()) {
+                        $this->itterateChat($messages['messages']['items'], $contactName, $phone);
+                    } else {
+                        // skip
+                        $this->info('-- Skipping karena tanggal tidak sesuai');
                     }
                 }
-                // put as file
-                Storage::put('/' . $this->folderName . '/ChatWith-' . $phone . '.txt', $text);
             });
             $this->index++;
         }
